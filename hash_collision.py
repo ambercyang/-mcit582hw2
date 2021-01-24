@@ -103,33 +103,3 @@ def hash_collision(k):
     return( x, y )
 
 
-# In[14]:
-
-
-[x,y] = hash_collision(4)
-print("this is x:",x)
-print("this is y:",y)
-
-colissionXY = [x, y]   
-L = [hashlib.sha256(x).hexdigest() for x in colissionXY] 
-print(L)
-
-
-# 1. Partial preimages
-# Use a brute-force algorithm to find a partial preimage.
-# Using the template “hash_preimage.py” write a function called “hash_preimage” that takes a single input, target_string, where target_string is a string of bits. The function “hash_preimage” should return a single variable x such that the trailing bits of SHA256(x) matches the target string (not the hash of the target string).
-# Your algorithm should be randomized, i.e., hash_preimage(target_string) should not always return the same partial preimage
-# 
-#     Example: If our target string was 101 and the hash(x)=01000101 then this would be a match because the least significant bits (rightmost) completely match the target string.
-
-# In[8]:
-
-
-def hash_preimage(target_string):
-    if not all( [x in '01' for x in target_string ] ):
-        print( "Input should be a string of bits" )
-        return
-    nonce = b'\x00'
-
-    return( nonce )
-
