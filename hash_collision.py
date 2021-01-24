@@ -54,7 +54,19 @@ def randomString(N):
   
 
 
-# In[6]:
+# In[22]:
+
+
+def my_to_bin(string):
+    res = ''
+    for char in string:
+        tmp = (bin(int(char,16))[2:])
+        tmp = '%08d' %int(tmp)
+        res += tmp
+    return res
+
+
+# In[26]:
 
 
 def hash_collision(k):
@@ -69,11 +81,11 @@ def hash_collision(k):
     totalBits = 256
     collisionBits = k
     count = 0 
-    n=10000000000
-    N=100000
+    n=10000000
+    N=10000000
     mydict = {}
 
-    intY = random.randint(1000, n)
+    intY = random.randint(100000, n)
         
    # while True:
     for i in range(N):
@@ -81,8 +93,8 @@ def hash_collision(k):
         intY=intY+1;
         msgY = str(intY)
         #print("this is msgY",msgY)
-        digX = hashlib.sha256(msgX.encode('utf-8')).hexdigest()
-        digY = hashlib.sha256(msgY.encode('utf-8')).hexdigest()
+        digX = my_to_bin(hashlib.sha256(msgX.encode('utf-8')).hexdigest())
+        digY = my_to_bin(hashlib.sha256(msgY.encode('utf-8')).hexdigest())
         
         valueX = digX[-k:]
         valueY = digY[-k:]
@@ -118,9 +130,7 @@ def hash_collision(k):
     return( x, y )
 
 
-# In[ ]:
-
-
+# In[28]:
 
 
 
