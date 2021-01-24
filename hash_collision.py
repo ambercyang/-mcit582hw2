@@ -158,78 +158,7 @@ def hash_collision(k):
 # In[39]:
 
 
-[x,y] = hash_collision(14)
-#print("this is x:",x)
-#print("this is y:",y)
 
-print("\n")
-
-colissionXY = [x, y]   
-#[myX,myY] = [hashlib.sha256(x).hexdigest() for x in colissionXY] 
-print("sha256(x)=", x)
-print("sha256(y)=", y)
-
-#print("binary(x)=", my_to_bin(myX))
-#print("binary(y)=", my_to_bin(myY))
-
-
-# 1. Partial preimages
-# Use a brute-force algorithm to find a partial preimage.
-# Using the template “hash_preimage.py” write a function called “hash_preimage” that takes a single input, target_string, where target_string is a string of bits. The function “hash_preimage” should return a single variable x such that the trailing bits of SHA256(x) matches the target string (not the hash of the target string).
-# Your algorithm should be randomized, i.e., hash_preimage(target_string) should not always return the same partial preimage
-# 
-#     Example: If our target string was 101 and the hash(x)=01000101 then this would be a match because the least significant bits (rightmost) completely match the target string.
-
-# In[17]:
-
-
-def hash_preimage(target_string):
-    if not all( [x in '01' for x in target_string ] ):
-        print( "Input should be a string of bits" )
-        return
-    nonce = b'\x00'
-    N=10000
-
-    intX = random.randint(1, 1000)
-    msg = target_string.encode('utf-8')
-    k=len(msg)
-    
-   # while True:
-    for i in range(N):
-        intX=intX+1;
-        msgX = str(intX)
-        digX_hex = hashlib.sha256(msgX.encode('utf-8')).hexdigest()
-        valueX = digX_hex[-k:]
-        
-        if valueY==msgX:
-            return(msgY)
-        
-    return( nonce )
-
-
-# In[ ]:
-
-
-msgX = str(random.randint(1, 2^20))
-msgY = str(random.randint(200, 2000))
-print(msgX)
-print(msgY)
-
-
-# In[19]:
-
-
-target_string = '101'
-myX = hash_preimage(target_string)
-print(myX)
-
-myhex = hashlib.sha256(myX).hexdigest()
-#import binascii
-#bin(int(binascii.hexlify(myhex.encode('utf-8')),16))
-
-
-
-# In[ ]:
 
 
 
