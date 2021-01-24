@@ -69,39 +69,60 @@ def hash_collision(k):
     totalBits = 256
     collisionBits = k
     count = 0 
-    n=100
+    n=10000000000
+    N=100000
     mydict = {}
 
+    intY = random.randint(1000, n)
         
+   # while True:
+    for i in range(N):
+        msgX = str(i)
+        intY=intY+1;
+        msgY = str(intY)
+        #print("this is msgY",msgY)
+        digX = hashlib.sha256(msgX.encode('utf-8')).hexdigest()
+        digY = hashlib.sha256(msgY.encode('utf-8')).hexdigest()
         
-    while True:
-        msgX = randomString(n)
-        msgY = randomString(n)
-        digX = hashlib.sha256(msgX.encode(encoding='utf_8', errors='strict')).hexdigest()
-        digY = hashlib.sha256(msgY.encode(encoding='utf_8', errors='strict')).hexdigest()
-    
         valueX = digX[-k:]
         valueY = digY[-k:]
         keyX = msgX
         keyY = msgY
         
-        if valueX not in mydict.values():
-            mydict.update({keyX:valueX})
+        if msgX==msgY:
+            continue
+            
+            
             
         if valueY in mydict.values():
             y = msgY.encode('utf-8')
             x = get_key(valueY,mydict).encode('utf-8')
+            print("this is i",i)
             return( x, y )
+        
+        if valueX not in mydict.values():
+            mydict.update({keyX:valueX})
+            
+
     
         if valueY not in mydict.values():
             mydict.update({keyY:valueY})
-            
-    
+                
+            #if i==2^10:
+                #print("reached 2^10")
+        
     
     x = b'\x00'
     y = b'\x00'
     
     return( x, y )
+
+
+# In[ ]:
+
+
+
+
 
 
 
