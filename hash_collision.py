@@ -87,14 +87,16 @@ def hash_collision(k):
         
         if valueX not in mydict.values():
             mydict.update({keyX:valueX})
-    
-        if valueY not in mydict.values():
-            mydict.update({keyY:valueY})
             
         if valueY in mydict.values():
             y = msgY.encode('utf-8')
             x = get_key(valueY,mydict).encode('utf-8')
-            return( x, y )    
+            return( x, y )
+    
+        if valueY not in mydict.values():
+            mydict.update({keyY:valueY})
+            
+    
     
     x = b'\x00'
     y = b'\x00'
@@ -102,10 +104,10 @@ def hash_collision(k):
     return( x, y )
 
 
-# In[10]:
+# In[9]:
 
 
-[x,y] = hash_collision(16)
+[x,y] = hash_collision(7)
 print("this is x:",x)
 print("this is y:",y)
 
