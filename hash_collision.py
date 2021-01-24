@@ -168,16 +168,6 @@ def hash_collision(k):
     return( x, y )
 
 
-# In[41]:
-
-
-
-[x,y] = hash_collision(14)
-print("x_bytes", x)
-print("y_bytes", y)
-
-
-# In[ ]:
 
 
 
