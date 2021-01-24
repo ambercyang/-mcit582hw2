@@ -83,7 +83,7 @@ def getbytes(bits):
         yield byte
 
 
-# In[9]:
+# In[11]:
 
 
 def hash_collision(k):
@@ -124,8 +124,8 @@ def hash_collision(k):
                 print("this is i",i)
                 myX_bin = my_to_bin(hashlib.sha256(x_str.encode('utf-8')).hexdigest())
                 myY_bin = my_to_bin(hashlib.sha256(msgY_str.encode('utf-8')).hexdigest())
-                print("myX_bin =", myX_bin)
-                print("myY_bin =", myY_bin)
+                #print("myX_binary =", myX_bin)
+               # print("myY_binary =", myY_bin)
                 
                 y = keyY.encode('utf-8')
                 x = x_str.encode('utf-8')
@@ -146,17 +146,4 @@ def hash_collision(k):
     return( x, y )
 
 
-# In[10]:
-
-
-[x,y] = hash_collision(14)
-print("x_bytes", x)
-print("y_bytes", y)
-
-
-# 1. Partial preimages
-# Use a brute-force algorithm to find a partial preimage.
-# Using the template “hash_preimage.py” write a function called “hash_preimage” that takes a single input, target_string, where target_string is a string of bits. The function “hash_preimage” should return a single variable x such that the trailing bits of SHA256(x) matches the target string (not the hash of the target string).
-# Your algorithm should be randomized, i.e., hash_preimage(target_string) should not always return the same partial preimage
-# 
-#     Example: If our target string was 101 and the hash(x)=01000101 then this would be a match because the least significant bits (rightmost) completely match the target string.
+# In[17]:
