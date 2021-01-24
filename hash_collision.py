@@ -54,7 +54,7 @@ def randomString(N):
   
 
 
-# In[22]:
+# In[6]:
 
 
 def my_to_bin(string):
@@ -66,7 +66,7 @@ def my_to_bin(string):
     return res
 
 
-# In[36]:
+# In[7]:
 
 
 def getbytes(bits):
@@ -83,76 +83,7 @@ def getbytes(bits):
         yield byte
 
 
-# In[50]:
-
-
-def hash_collision(k):
-    if not isinstance(k,int):
-        print( "hash_collision expects an integer" )
-        return( b'\x00',b'\x00' )
-    if k <=0:
-        print( "Specify a positive number of bits" )
-        return( b'\x00',b'\x00' )
-   
-    #Collision finding code goes here
-    totalBits = 256
-    collisionBits = k
-    count = 0 
-    n=10000000
-    N=10000000
-    mydict = {}
-
-    intY = random.randint(100000, n)
-    print("this is k=", k)
-        
-   # while True:
-    for i in range(N):
-        msgX_str = str(i)
-        intY=intY+1;
-        msgY_str = str(intY)
-        #print("this is msgY",msgY)
-        digX_bin = my_to_bin(hashlib.sha256(msgX_str.encode('utf-8')).hexdigest())
-        digY_bin = my_to_bin(hashlib.sha256(msgY_str.encode('utf-8')).hexdigest())
-        
-        valueX = digX_bin[-k:]
-        valueY = digY_bin[-k:]
-        keyX = msgX_str
-        keyY = msgY_str
-        
-    
-        if valueY in mydict.values():
-            if digX_bin==digY_bin:
-                continue
-            else:
-                y_bytes = msgY_str.encode('utf-8')
-                x_str = get_key(valueY,mydict)
-                
-                print("this is i",i)
-                myX_bin = my_to_bin(myX)
-                myY_bin = my_to_bin(myY)
-                print("myX_bin =", myX_bin)
-                print("myY_bin =", myY_bin)
-                
-                y = keyY.encode('utf-8')
-                x = x_str.encode('utf-8')
-                return( x, y )
-        
-        if valueX not in mydict.values():
-            mydict.update({keyX:valueX})
-            
-
-    
-        if valueY not in mydict.values():
-            mydict.update({keyY:valueY})
-        
-    
-    x = b'\x00'
-    y = b'\x00'
-    
-    return( x, y )
-
-
-# In[51]:
+# In[17]:
 
 
 [x,y] = hash_collision(16)
@@ -173,3 +104,81 @@ print("sha256(y)=", y)
 # Your algorithm should be randomized, i.e., hash_preimage(target_string) should not always return the same partial preimage
 # 
 #     Example: If our target string was 101 and the hash(x)=01000101 then this would be a match because the least significant bits (rightmost) completely match the target string.
+
+# In[39]:
+
+
+def hash_collision(k):
+    if not isinstance(k,int):
+        print( "hash_collision expects an integer" )
+        return( b'\x00',b'\x00' )
+    if k <=0:
+        print( "Specify a positive number of bits" )
+        return( b'\x00',b'\x00' )
+   
+    #Collision finding code goes here
+
+
+    mydict = {}
+    n=10
+    print("this is k=", k)
+    i=1
+    
+    while True:
+        msgX_str = randomString(n)
+        msgY_str = randomString(n)
+       
+        digX_bin = my_to_bin(hashlib.sha256(msgX_str.encode('utf-8')).hexdigest())
+        digY_bin = my_to_bin(hashlib.sha256(msgY_str.encode('utf-8')).hexdigest())
+        
+        valueX = digX_bin[-k:]
+        valueY = digY_bin[-k:]
+        keyX = msgX_str
+        keyY = msgY_str
+        
+    
+        if valueY in mydict.values():
+            if msgX_str==msgY_str:
+                continue
+            else:
+                x_str = get_key(valueY,mydict)
+                
+                print("this is i",i)
+                myX_bin = my_to_bin(hashlib.sha256(x_str.encode('utf-8')).hexdigest())
+                myY_bin = my_to_bin(hashlib.sha256(msgY_str.encode('utf-8')).hexdigest())
+                print("myX_bin =", myX_bin)
+                print("myY_bin =", myY_bin)
+                
+                y = keyY.encode('utf-8')
+                x = x_str.encode('utf-8')
+                return( x, y )
+        
+        if valueX not in mydict.values():
+            mydict.update({keyX:valueX})           
+
+    
+        if valueY not in mydict.values():
+            mydict.update({keyY:valueY})
+        i=i+1
+        
+    
+    x = b'\x00'
+    y = b'\x00'
+    
+    return( x, y )
+
+
+# In[41]:
+
+
+
+[x,y] = hash_collision(14)
+print("x_bytes", x)
+print("y_bytes", y)
+
+
+# In[ ]:
+
+
+
+
