@@ -154,17 +154,8 @@ print(my_to_bin(myx_hex))
 print(my_to_bin(myy_hex))
 
 
-# In[39]:
 
 
-myx_hex = hashlib.sha256(b'gwmuKCEoEDPS6KWk2Qr7wbYLEcx').hexdigest()
-myy_hex = hashlib.sha256(b'8zE6PAVANDpN').hexdigest()
-
-print(myx_hex)
-print(myy_hex)
-
-print(my_to_bin(myx_hex))
-print(my_to_bin(myy_hex))
 
 
 # 1. Partial preimages
