@@ -54,17 +54,6 @@ def randomString(N):
   
 
 
-# In[6]:
-
-
-def my_to_bin(string):
-    res = ''
-    for char in string:
-        tmp = (bin(int(char,16))[2:])
-        tmp = '%08d' %int(tmp)
-        res += tmp
-    return res
-
 
 # In[7]:
 
