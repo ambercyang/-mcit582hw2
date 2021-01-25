@@ -54,6 +54,17 @@ def randomString(N):
   
 
 
+# In[6]:
+
+
+def my_to_bin(string):
+    res = ''
+    for char in string:
+        tmp = (bin(int(char,16))[2:])
+        tmp = '%08d' %int(tmp)
+        res += tmp
+    return res
+
 
 # In[7]:
 
@@ -154,8 +165,17 @@ print(my_to_bin(myx_hex))
 print(my_to_bin(myy_hex))
 
 
+# In[39]:
 
 
+myx_hex = hashlib.sha256(b'gwmuKCEoEDPS6KWk2Qr7wbYLEcx').hexdigest()
+myy_hex = hashlib.sha256(b'8zE6PAVANDpN').hexdigest()
+
+print(myx_hex)
+print(myy_hex)
+
+print(my_to_bin(myx_hex))
+print(my_to_bin(myy_hex))
 
 
 # 1. Partial preimages
