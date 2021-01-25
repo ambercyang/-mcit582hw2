@@ -83,7 +83,7 @@ def getbytes(bits):
         yield byte
 
 
-# In[11]:
+# In[46]:
 
 
 def hash_collision(k):
@@ -99,18 +99,16 @@ def hash_collision(k):
 
     mydict = {}
     n=10
-    print("this is k=", k)
+    print("k=", k)
     i=1
     
     while True:
         msgX_str = randomString(n)
         msgY_str = randomString(n)
        
-        digX_bin = my_to_bin(hashlib.sha256(msgX_str.encode('utf-8')).hexdigest())
-        digY_bin = my_to_bin(hashlib.sha256(msgY_str.encode('utf-8')).hexdigest())
+        valueX = bin(int(hashlib.sha256(msgX_str.encode('utf-8')).hexdigest(),16))[-k:]
+        valueY = bin(int(hashlib.sha256(msgY_str.encode('utf-8')).hexdigest(),16))[-k:]
         
-        valueX = digX_bin[-k:]
-        valueY = digY_bin[-k:]
         keyX = msgX_str
         keyY = msgY_str
         
@@ -121,11 +119,11 @@ def hash_collision(k):
             else:
                 x_str = get_key(valueY,mydict)
                 
-                print("this is i",i)
-                myX_bin = my_to_bin(hashlib.sha256(x_str.encode('utf-8')).hexdigest())
-                myY_bin = my_to_bin(hashlib.sha256(msgY_str.encode('utf-8')).hexdigest())
-                #print("myX_binary =", myX_bin)
-               # print("myY_binary =", myY_bin)
+                #print("this is i",i)
+                myX_bin = bin(int(hashlib.sha256(x_str.encode('utf-8')).hexdigest(),16))[-k:]
+                myY_bin = bin(int(hashlib.sha256(msgY_str.encode('utf-8')).hexdigest(),16))[-k:]
+                print("x_binary =", myX_bin)
+                print("x_binary =", myY_bin)
                 
                 y = keyY.encode('utf-8')
                 x = x_str.encode('utf-8')
@@ -146,4 +144,43 @@ def hash_collision(k):
     return( x, y )
 
 
-# In[17]:
+# In[47]:
+
+
+[x,y] = hash_collision(19)
+print("x_bytes = ", x)
+print("y_bytes = ", y)
+
+
+# In[36]:
+
+
+myx_hex = hashlib.sha256(x).hexdigest()
+myy_hex = hashlib.sha256(y).hexdigest()
+
+print(myx_hex)
+print(myy_hex)
+
+print(my_to_bin(myx_hex))
+print(my_to_bin(myy_hex))
+
+
+# In[39]:
+
+
+myx_hex = hashlib.sha256(b'gwmuKCEoEDPS6KWk2Qr7wbYLEcx').hexdigest()
+myy_hex = hashlib.sha256(b'8zE6PAVANDpN').hexdigest()
+
+print(myx_hex)
+print(myy_hex)
+
+print(my_to_bin(myx_hex))
+print(my_to_bin(myy_hex))
+
+
+# 1. Partial preimages
+# Use a brute-force algorithm to find a partial preimage.
+# Using the template “hash_preimage.py” write a function called “hash_preimage” that takes a single input, target_string, where target_string is a string of bits. The function “hash_preimage” should return a single variable x such that the trailing bits of SHA256(x) matches the target string (not the hash of the target string).
+# Your algorithm should be randomized, i.e., hash_preimage(target_string) should not always return the same partial preimage
+# 
+#     Example: If our target string was 101 and the hash(x)=01000101 then this would be a match because the least significant bits (rightmost) completely match the target string.
